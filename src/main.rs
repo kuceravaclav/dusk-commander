@@ -23,16 +23,15 @@ impl App {
 
     fn run(&mut self, terminal: &mut ratatui::DefaultTerminal) -> Result<()> {
         while !self.should_quit {
-            terminal.draw(|frame| frame.render_widget("Hello, world!", frame.area()))?;
+            terminal.draw(|frame| self.render(frame))?;
             self.handle_events()?;
         }
         Ok(())
     }
 
-    fn render(&mut self, frame: &mut ratatui::Frame) -> Result<()> {
+    fn render(&mut self, frame: &mut ratatui::Frame) {
         let greeting = format!("Hello, {}!", self.name);
         frame.render_widget(greeting, frame.area());
-        Ok(())
     }
 
     fn handle_events(&mut self) -> Result<()> {
