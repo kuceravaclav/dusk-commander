@@ -1,5 +1,6 @@
 #![forbid(unsafe_code)]
 use crossterm::event;
+use ratatui::widgets::{Paragraph, Block, Borders};
 
 type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 
@@ -26,7 +27,11 @@ impl App {
 
     fn render(&mut self, frame: &mut ratatui::Frame) {
         let greeting = format!("Hello, {}!", self.name);
-        frame.render_widget(greeting, frame.area());
+        let paragraph = Paragraph::new(greeting)
+            .block(Block::default()
+                .borders(Borders::ALL)
+                .title("Dusk commander"));
+        frame.render_widget(paragraph, frame.area());
     }
 
     fn handle_events(&mut self) -> Result<()> {
