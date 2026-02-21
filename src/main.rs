@@ -1,5 +1,6 @@
 #![forbid(unsafe_code)]
 mod app;
+mod event;
 mod ui;
 
 use app::App;

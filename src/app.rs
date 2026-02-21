@@ -1,7 +1,8 @@
 #![forbid(unsafe_code)]
-use crossterm::event;
+use crossterm::event::{Event, read as crossterm_read};
 
 use crate::ui;
+use crate::event;
 
 type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 
@@ -30,13 +31,17 @@ impl App {
         self.name.clone()
     }
 
+    pub fn quit(&mut self) {
+        self.should_quit = true;
+    }
+
     fn render(&mut self, frame: &mut ratatui::Frame) {
         ui::render(self, frame);
     }
 
     fn handle_events(&mut self) -> Result<()> {
-        if event::read()?.is_key_press() {
-            self.should_quit = true;
+        if let Event::Key(key) = crossterm_read()? {
+            event::handle_key_event(self, key);
         }
         Ok(())
     }
