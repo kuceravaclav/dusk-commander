@@ -1,3 +1,4 @@
+#![forbid(unsafe_code)]
 use ratatui::Frame;
 use ratatui::widgets::{Paragraph, Block, Borders};
 use ratatui::layout::{Constraint, Direction, Layout};
